@@ -1,0 +1,451 @@
+<html><head>
+    <title>TodoMvc</title>
+    <style>
+        button {
+            border: 0;
+            background: none;
+            font-size: 100%;
+            vertical-align: baseline;
+            font-family: inherit;
+            font-weight: inherit;
+            color: inherit;
+        }
+        body {
+            font: 14px 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            line-height: 1.4em;
+            background: #f5f5f5;
+            color: #4d4d4d;
+            min-width: 230px;
+            max-width: 550px;
+            margin: 0 auto;
+            font-weight: 300;
+        }
+        .todoapp {
+            background: #fff;
+            margin: 130px 0 40px 0;
+            position: relative;
+            width:inherit;
+            height: auto;
+            box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2),
+            0 25px 50px 0 rgba(0, 0, 0, 0.1);
+        }
+        .todoapp h1 {
+            position: absolute;
+            top: -155px;
+            width: 100%;
+            font-size: 100px;
+            font-weight: 100;
+            text-align: center;
+            color: rgba(39, 99, 189, 0.15);
+        }
+        .new-todo{
+            position: relative;
+            margin: 240px 0 20px 0;
+            height: auto;
+            width: 100%;
+            font-size: 24px;
+            font-family: inherit;
+            font-weight: 300;
+            line-height: 1.4em;
+            top:10px;
+            left: 15px;
+            outline: none;
+            color: rgb(105, 105, 221);
+            padding: 3px 3px 5px 5px;
+            
+        }
+        .new-todo:hover{
+            background-color: #eee;
+            cursor: pointer;
+        }
+        .todoapp li {
+            position: relative;
+            font-size: 24px;
+            border-bottom: 1px solid #ededed;
+        }
+        .todos {
+            background: #fff;
+            margin: 0 0 40px 0;
+            position: relative;
+            width:inherit;
+            height: 200px;
+            box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2),
+            0 10px 20px 0 rgba(0, 0, 0, 0.1);
+        }
+        .todos .todo-input{
+            resize: none;
+            outline-style: none ;
+            border: none;
+            position: relative;
+            padding: 10px 10px 50px 10px;
+            width: 500px;
+            top:20px;
+            left: 25px;
+            font-size: 14px;
+            font-weight: 700px;
+            font-family: inherit;
+            overflow: auto;
+        }
+        .todos .save{
+            position: relative;
+            background-color: rgb(141, 141, 231);
+            padding: 10px 20px;
+            margin: 50px 0 0 300px;
+            border-radius: 3px;
+            color: #fff;
+            font-size: 10px;
+            font-weight: 700px;
+            font-family: inherit;
+            pointer-events: none;
+        }
+        .save.av{
+            background-color: rgb(60, 60, 226);
+            pointer-events:visible;
+        }
+        .todos .save:hover{
+            background-color: rgb(110, 110, 226);
+        }
+        .todos .cancel{
+            position: relative;
+            background-color: #fff;
+            padding: 9px 18px;
+            margin: 0 0 0 60px;
+            border: 1px solid #000;
+            border-radius: 3px;
+            color: #000;
+            font-size: 10px;
+            font-weight: 700px;
+            font-family: inherit;
+        }
+        .todos .cancel:hover{
+            background-color: #ddd;
+        }
+        .todo-list {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        li {
+            position: relative;
+            top:20px;
+            font-size: 24px;
+            border-bottom: 1px solid #d8d5d5;
+        }
+        li:first-child {
+            border-top: 1px solid #d8d5d5;
+        }
+        li.editing {
+            border-bottom: none;
+            padding: 0;
+        }
+        li.editing .view {
+            display: none;
+        }
+
+        li .tag {
+            width: 40px;
+            top: 0;
+            bottom: 0;
+            height: auto;
+            position: absolute;
+            text-align: center;
+            margin: auto 0;
+            border: none; 
+        }
+        li .todo-label {
+            white-space: pre-line;
+            word-break: break-all;
+            padding: 15px 60px 15px 15px;
+            margin-left: 45px;
+            display: block;
+            line-height: 1.2;
+            transition: color 0.4s;
+        }
+        
+        li .delete {
+            display: none;
+            position: absolute;
+            text-align: center;
+            top: 0;
+            right: 10px;
+            bottom: 0;
+            font-size: 30px;
+            color: #cc9a9a;
+            margin-bottom: 11px;
+            width: 40px;
+            height: 40px;
+            margin: auto 0;
+            transition: color 0.2s ease-out;
+        }
+
+         li .delete:hover {
+            color: #af5b5e;
+        }
+
+         li .delete:after {
+            content: 'x';
+        }
+
+         li:hover .delete {
+            display: block;
+        }
+
+         li .edit {
+            display: none;
+        }
+
+         li.editing:last-child {
+            margin-bottom: -1px;
+        }
+        .todo-count{
+            margin: 10px 20px;
+            font-size: 18px;
+            font-family: inherit;
+        }
+        .showdone{
+            position: relative;
+            top:20px;
+            padding: 15px 150px;
+            margin: 0px 0px;
+            width: inherit;
+            height: 50px;
+            border-top: 1px solid #d8d5d5;
+        }
+        .showdone .done{
+            position: relative;
+            text-align: center;
+            margin: 0px 20px;
+            padding: 10px 30px;
+        }
+
+        .showdone .done:hover{
+            background-color: #ddd;
+            cursor: pointer;
+        }
+        .done-list li{
+            display: block;
+            top:5px;
+            right: 15px;
+            opacity:0.5;
+            text-decoration: line-through;
+        }
+        .done-list li .hid{
+            display: none;
+        }
+        .doneall{
+            position: absolute;
+            left:430px;
+            top:0px;
+            font-family: inherit;
+            font-size: 18px;
+            color:red;
+        }
+        .doneall:hover{
+            cursor: pointer;
+        }
+    </style>
+    
+  </head>
+  
+  <body>
+    <div class="todoapp">
+        <span class="todo-count"></span>
+        <button class="doneall" >全部完成</button>
+        <header class="header">
+            <h1>TodoList</h1>
+            <div class ='todos'>
+                <textarea rows = '3' class="todo-input" placeholder="写下你的待办事项" autofocus></textarea>
+                <button class="save" >保存</button>
+                <button class="cancel" onclick="cancelinput()">取消</button>
+            </div>
+            <span class="new-todo" onclick="showinput()">+ 新建待办</span>
+        </header>
+        <ul class="todo-list"></ul>
+        <div class="showdone" >
+            <button class="done" onclick="showDonelist()">↓ 显示已完成待办</button>
+        </div>
+        <ul class="done-list"></ul>
+        <footer class="footer">
+    </div>
+    <script>
+        var $ = function(sel) {
+            return document.querySelector(sel);
+        };
+        var $all = function(sel) {
+            return document.querySelectorAll(sel);
+        };
+        var CL_EDITING ='editing';
+        var CL_COMPLETED = 'completed';
+        var activeAmount = 0;
+        var ids =0;
+        var flag = false;
+        window.onload = function init() {
+            $('.todos').style.display ="none";
+            //输入为空时确定键不可用
+            $('.todo-input').addEventListener('input', function(){
+                if ($('.todo-input').value.length>0){
+                    $('.save').classList.add('av');
+                }
+                else{
+                    $('.save').classList.remove('av');
+                }
+            });
+            updateActive();
+            model.init (function(){
+                var data = model.data;
+                var input = $('.todo-input');
+                var save =$('.save');
+                save.addEventListener('click',function(){
+                    data.items.push({msg: input.value, completed: false});
+                    cancelinput();
+                    update();
+                });
+                var doneall =$('.doneall');
+                doneall.addEventListener('click',function(){
+                    data.items.forEach(function(itemData, index) {
+                        if(!itemData.completed)
+                            itemData.completed = !itemData.completed;
+                    });
+
+                    update();
+                });
+                update();
+            });
+        }
+
+        function showinput()
+        {
+            $('.new-todo').style.display ='none';
+            $('.todos').style.display ="block";
+        }
+        function cancelinput(){
+            $('.todos').style.display ="none";
+            $('.todo-input').value = "";
+            $('.new-todo').style.display ='inline';
+            $('.save').classList.remove('av');
+        }
+        function showDonelist()
+        {
+            if(flag == false)
+                flag = true;
+            else
+                flag = false;
+            var doneitems = $all('.done-list li');
+            for (var i = 0; i < doneitems.length; ++i) {
+                var item = doneitems[i];
+                if(flag ==false)
+                    item.style.display='block';
+                else    
+                    item.style.display='none'
+            }
+            updateActive();
+        }
+        function updateActive(){
+            var todoitems = $all('.todo-list li');
+            var doneitems = $all('.done-list li');
+            $('.todo-count').innerHTML = '待办 · '+ todoitems.length;
+            if(todoitems.length == 0)
+                $('.doneall').style.display='none';
+            else
+                $('.doneall').style.display='block';
+            if(flag)
+                $('.done').innerHTML = '↓ 显示已完成待办 · '+ doneitems.length;
+            else
+                $('.done').innerHTML = '↑ 隐藏已完成待办 · '+ doneitems.length;
+        }
+        function update()
+        {
+            model.flush();
+            var data = model.data;
+            var todoList =$('.todo-list');
+            var doneList = $('.done-list');
+            todoList.innerHTML ='';
+            doneList.innerHTML='';
+            data.items.forEach(function(itemData, index) {
+                var item = document.createElement('li');
+                var id = 'item' + ids++;
+                item.setAttribute('id', id);
+                item.innerHTML = [
+                    '<div class="view">',
+                    '  <input class="tag" type="checkbox">',
+                    '  <label class="todo-label">' + itemData.msg + '</label>',
+                    '  <button class="delete"></button>',
+                    '</div>'
+                ].join('');
+                var label = item.querySelector('.todo-label');
+                label.addEventListener('dblclick', function() {
+                    item.classList.add(CL_EDITING);
+                    var edit = document.createElement('div');
+                    var finished = false;
+                    edit.setAttribute('class', 'todos');
+                    edit.innerHTML = [
+                        '<textarea rows = "3" class="todo-input"  placeholder="写下你的待办事项">'+label.innerHTML+'</textarea>',
+                        '  <button class="save">保存</button>',
+                        '  <button class="cancel">取消</button>'
+                    ].join('');
+                    var c = edit.querySelector('.cancel');
+                    c.addEventListener('click',function(){
+                        finish();
+                    });
+                    function finish() {
+                        if (finished) 
+                            return;
+                        finished = true;
+                        item.removeChild(edit);
+                        item.classList.remove(CL_EDITING);
+                    }
+                    var s = edit.querySelector('.save');
+                    s.classList.add('av');
+                    var i = edit.querySelector('.todo-input');
+                    i.addEventListener('input', function(){
+                        if (i.value.length>0){
+                            s.classList.add('av');
+                        }
+                        else{
+                            s.classList.remove('av');
+                        }
+                    });
+                    s.addEventListener('click',function(){
+                        itemData.msg = i.value;
+                        update();
+                        label.innerHTML = i.value;
+                        finish();
+                    });
+                    item.appendChild(edit);
+                    edit.focus();
+                }, false);
+
+                item.querySelector('.tag').addEventListener('change', function() {
+                    itemData.completed = !itemData.completed;
+                    console.log($('.tag').checked);
+                    if(!itemData.completed)
+                        doneList.removeChild(item);
+                    else
+                        todoList.removeChild(item);
+                    update();
+                });
+
+                item.querySelector('.delete').addEventListener('click', function() {
+                    data.items.splice(index,1);
+                    if(itemData.completed)
+                        doneList.removeChild(item);
+                    else
+                        todoList.removeChild(item);
+                    updateActive();
+                    update();
+                });
+                if(itemData.completed)
+                    doneList.insertBefore(item, doneList.firstChild);
+                else
+                    todoList.insertBefore(item, todoList.firstChild);
+                updateActive();
+                flag=!flag;
+                showDonelist();
+                });
+        }
+    </script>
+    <script src="model.js"></script>
+    <script src="provider-memory.js"></script>
+  
+  </body></html>
